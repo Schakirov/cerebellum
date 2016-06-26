@@ -1,0 +1,217 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\probe.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\probe.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_PROBE_DIALOG DIALOGEX 0, 0, 1240, 600
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "probe"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,15,7,50,14
+    PUSHBUTTON      "create",IDC_BUTTON1,63,33,50,14
+    PUSHBUTTON      "N up",IDC_BUTTON2,113,7,50,14
+    PUSHBUTTON      "N down",IDC_BUTTON3,113,19,50,14
+    PUSHBUTTON      "M up",IDC_BUTTON4,161,7,50,14
+    PUSHBUTTON      "M down",IDC_BUTTON5,162,19,50,14
+    PUSHBUTTON      "epsi up",IDC_BUTTON6,209,7,50,14
+    PUSHBUTTON      "epsi down",IDC_BUTTON7,209,19,50,14
+    PUSHBUTTON      "umka up",IDC_BUTTON8,258,7,50,14
+    PUSHBUTTON      "umka down",IDC_BUTTON9,258,19,50,14
+    PUSHBUTTON      "tm up",IDC_BUTTON10,306,7,50,14
+    PUSHBUTTON      "tm down",IDC_BUTTON11,306,19,50,14
+    PUSHBUTTON      "noise up",IDC_BUTTON12,356,7,50,14
+    PUSHBUTTON      "scale up",IDC_BUTTON13,405,7,50,14
+    PUSHBUTTON      "scale down",IDC_BUTTON14,405,20,50,14
+    PUSHBUTTON      "move right",IDC_BUTTON15,454,20,50,14
+    PUSHBUTTON      "move left",IDC_BUTTON16,453,7,50,14
+    PUSHBUTTON      "up",IDC_BUTTON17,584,7,50,14
+    PUSHBUTTON      "down",IDC_BUTTON18,584,20,50,14
+    PUSHBUTTON      "magnify",IDC_BUTTON19,633,7,50,14
+    PUSHBUTTON      "make less",IDC_BUTTON20,633,20,50,14
+    PUSHBUTTON      "move left",IDC_BUTTON21,683,7,50,14
+    PUSHBUTTON      "move right",IDC_BUTTON22,683,20,50,14
+    CONTROL         "",IDC_SLIDER1,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,682,33,53,15
+    PUSHBUTTON      "redraw",IDC_BUTTON23,683,46,50,14
+    PUSHBUTTON      "show corresp",IDC_BUTTON24,584,35,50,14
+    PUSHBUTTON      "show num",IDC_BUTTON25,585,48,50,14
+    PUSHBUTTON      "sin on/off",IDC_BUTTON26,503,7,50,14
+    PUSHBUTTON      "step up",IDC_BUTTON27,504,20,50,14
+    PUSHBUTTON      "step down",IDC_BUTTON28,503,34,50,14
+    PUSHBUTTON      "refresh on/off",IDC_BUTTON29,753,7,50,14
+    PUSHBUTTON      "eligc up",IDC_BUTTON30,64,7,50,14
+    PUSHBUTTON      "eligc down",IDC_BUTTON31,64,20,50,14
+    PUSHBUTTON      "noise down",IDC_BUTTON32,356,20,50,14
+    PUSHBUTTON      "tmpred up",IDC_BUTTON33,306,32,50,14
+    PUSHBUTTON      "tmpred down",IDC_BUTTON34,306,45,50,14
+    PUSHBUTTON      "freq1 up",IDC_BUTTON35,16,20,50,14
+    PUSHBUTTON      "freq1 down",IDC_BUTTON36,16,34,50,14
+    PUSHBUTTON      "freq2 up",IDC_BUTTON37,17,47,50,14
+    PUSHBUTTON      "freq2 down",IDC_BUTTON38,17,60,50,14
+    PUSHBUTTON      "delete current file",IDC_BUTTON39,821,7,71,14
+    PUSHBUTTON      "scale_rihist +",IDC_BUTTON40,791,26,50,14
+    PUSHBUTTON      "scale_rihist --",IDC_BUTTON41,791,39,50,14
+    PUSHBUTTON      "show_red",IDC_BUTTON42,683,60,50,14
+    PUSHBUTTON      "hor ++",IDC_BUTTON43,841,26,50,14
+    PUSHBUTTON      "hor --",IDC_BUTTON44,842,39,50,14
+    PUSHBUTTON      "rihist right",IDC_BUTTON45,791,52,50,14
+    PUSHBUTTON      "rihist left",IDC_BUTTON46,792,64,50,14
+    PUSHBUTTON      "RGB ++",IDC_BUTTON47,913,7,50,14
+    PUSHBUTTON      "RGB --",IDC_BUTTON48,914,19,50,14
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "FileDescription", "probe MFC Application"
+            VALUE "FileVersion", "1, 0, 0, 1"
+            VALUE "InternalName", "probe"
+            VALUE "LegalCopyright", "Copyright (C) 2012"
+            VALUE "OriginalFilename", "probe.EXE"
+            VALUE "ProductName", "probe Application"
+            VALUE "ProductVersion", "1, 0, 0, 1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_PROBE_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 1233
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 593
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#endif //_WIN32
+#include "res\probe.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

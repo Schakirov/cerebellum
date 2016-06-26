@@ -1,0 +1,189 @@
+//////////
+//////////   THREE PC  +  THREE IOC + 5 nuclear cells
+//////////   An idea of interconnected nuclear cells 
+//////////         Granule cells are the same for 
+//////////              all three 
+//////////          May 11, 1999
+//Piece-wise constant inputs: Learning and Read-out: October 13, 1998.
+//More or less continous time. I.e. the same, as previous,
+//but it appears at the input in a slow, quasi-continuos manner
+//Impulse model for the purkinje cell
+//October 19, 1998
+//This version contains interspike hystograms and cross-correlation
+//between CS and SS.
+
+
+
+int main()
+	{
+		progmode = 1;
+		for (Ncount=5; Ncount<7;Ncount+=10) //1//++
+		{
+			Mcount_min=1;
+			if (Ncount==1) Mcount_max=8;
+			if (Ncount==2) Mcount_max=6;
+			if (Ncount==3) Mcount_max=5;
+			if (Ncount==4) Mcount_max=5;
+			if (Ncount==5) Mcount_max=9;
+			if (Ncount==6) Mcount_max=10;
+			Mcount_min=7;Mcount_max=8;/////////////delete
+		for (Mcount=Mcount_min; Mcount<Mcount_max; Mcount++)
+		{
+			initialize_N_M_wt();
+
+		for (step=10;step<50;step+=100)//step=0
+		{
+		for (sinmode=1;sinmode<2;sinmode+=100)//0
+		{
+		for (eligc_mode=2;eligc_mode>-1;eligc_mode-=100)
+		{
+			if (eligc_mode==1) {freq1=0.7; freq2=0.5;}; //below is (exp-exp)^2; it's 0 both when x=0 and x=inf
+			if (eligc_mode==2) {freq1=0.9; freq2=0.7;}; //below is (exp-exp)^2; it's 0 both when x=0 and x=inf
+			if (eligc_mode==3) {freq1=0.99; freq2=0.7;}; //below is (exp-exp)^2; it's 0 both when x=0 and x=inf
+			if (eligc_mode==4) {freq1=0.99; freq2=0.9;}; //below is (exp-exp)^2; it's 0 both when x=0 and x=inf
+		epsi_count=5; epsi_basal = epsi_basal_first = 0.00001;//0.0000001; //epsi_basal_first is used in other parts of program
+		allowexit1=allowexit2=allowfprintf=0;
+		if (progmode==1) allowfprintf=1;
+		while (!allowexit2)
+		{	
+			if (progmode==2) //choose epsilon such as 2min (16k tacts) is needed for 80=>60 or 60=>80 calming
+			{
+				printf("\nbeg while, allowexit1=%d, allowfprintf=%d",allowexit1,allowfprintf);
+				if (allowexit1==0)
+				{
+					printf("\n'm here,tm_ust1=%d",tm_ust1); 
+					if ((tm_ust1>14000)&&(tm_ust1<18000)) {allowfprintf=1;printf("\nallowfprintf on!");}
+						else 
+						{
+							if ((tm_ust1<(Tjump2-Tjump1))&&(tm_ust1>100)) epsi_basal = epsi_basal*tm_ust1/16000.;
+							else epsi_basal = epsi_basal*10.;
+							printf("\nnew epsi_basal=%9.7f",epsi_basal);
+						}
+				}
+				else 
+				{
+					if ((tm_ust2>14000)&&(tm_ust2<18000)) allowfprintf=1;
+					else 
+					{
+						if ((tm_ust2<(Tjump2-Tjump1))&&(tm_ust2>100)) epsi_basal = epsi_basal*tm_ust2/16000.;
+						else epsi_basal = epsi_basal*10.;
+					}
+				}
+				if (allowfprintf) {umka_max=7; noise_max=2;}
+				else {umka_max=2;noise_max=1;};
+			}
+			if (progmode==1) {umka_max=7; noise_max=2;} //progmode=1 - epsilon runs just several given values that we specify
+		umka_max=2; ///////////delete
+		for (epsi_umka=1; epsi_umka<umka_max; epsi_umka++) //enlittles epsi after "epsi_off" event
+		{ noise_max=1;///////////delete
+		for (noise=0; noise<noise_max; noise++)
+		{
+	printf("\ninitialization of everything - begin");
+	initialization_of_everything();//________________________________________
+	printf("\ninitialization of everything - end");
+	if (eligc_mode==0) eligibility_as_grphase_initialization();
+//	general_randomization(58654);
+//  show_gc_activity(); Sleep(5000);
+	printf("\nM=%d",M);
+	epsi = epsi_basal;
+	tm_ust1=tm_ust2=0;
+	Sleep(500);
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	 for (tm=0; tm<Tpred; tm++) //main cycle begins 
+	 {
+		 alf=Pfunc[0][fazat];//  /\/\/\/\/  ("fazat" is const at each iteration of "tm")
+		 if (noise>0) 
+		 {
+			 fi_cylinder+=random(9)-4; if (fi_cylinder>360) fi_cylinder-=360; if (fi_cylinder<0) fi_cylinder+=360;
+			 alf=alf+r_cylinder*sin(fi_cylinder*3.141592654/180.);
+		 };
+// other_PC_influence_calculation(); //currently we have only one purkinje cell		
+		 purk=purk*0.9;	
+		 for (ik=0; ik<wt; ik++) //updating output of PC
+		 {								//wt is number of non-zero components
+			  irab1=vhoda[fazat][ik]; //number of active GC if it's active
+              grphase[irab1]=0; //so we can to zero it's grphase
+			  grocc[irab1]++; //integrating each GC excitations
+              purk+=sgm[irab1]; //adding weight of GC=>PC
+		 }
+		 for (qq=0;qq<N;qq++) //updating weights of GC=>PC 
+         {
+			 if ((tm==Tepsioff+1)&&(qq==2)) printf("\n-3- eligc2now[%d]=%6.2f,freq2=%6.2f,vhod[%d][%d]=%d",qq,eligc2[qq],freq2,fazat,qq,vhod[fazat][qq]);
+			 if (eligc_mode==0)
+			 sgm[qq]+=float(epsi*hhi[fazacf]*eligc[(grphase[qq])]);//Cerebellar Mode
+			 else
+			 {
+		    if ((tm==Tepsioff+1)&&(qq==2)) printf("\n-2- eligc2now[%d]=%6.2f,freq2=%6.2f,vhod[%d][%d]=%d",qq,eligc2[qq],freq2,fazat,qq,vhod[fazat][qq]);
+			eligc[qq]=eligc[qq]*0.9+vhod[fazat][qq];//vhod[fazat][qq];//
+			eligc1[qq]=eligc1[qq]*(freq1)+vhod[fazat][qq];
+			if ((tm==Tepsioff+1)&&(qq==2)) printf("\n-1- eligc2now[%d]=%6.2f,freq2=%6.2f,vhod[%d][%d]=%d",qq,eligc2[qq],freq2,fazat,qq,vhod[fazat][qq]);
+			eligc2[qq]=eligc2[qq]*(freq2)+vhod[fazat][qq];
+			if ((tm==Tepsioff)&&(qq==2)) printf("\n-- eligc2prev[%d]=%6.2f",qq,eligc2[qq]);
+			eligc3[qq]=eligc3[qq]*(freq1+freq2)/2.+vhod[fazat][qq];
+			eligc[qq]=eligc1[qq]+eligc2[qq]-2.*eligc3[qq];
+			sgm[qq]+=float(epsi*hhi[fazacf]*eligc[qq]);
+			 }
+
+//		if (tm%200000<3)	printf("sgm+=%9.8f, fazacf=%d, sgm=%6.2f, eligc=%6.5f,grphase=%d,qq=%d\n",float(epsi*hhi[fazacf]*eligc[(grphase[qq])]), fazacf,sgm[qq],eligc[(grphase[qq])],grphase[qq],qq);
+			if (sgm[qq]<0) sgm[qq]=0;
+			if (sgm[qq]>5) sgm[qq]=5; //in the beginning, they're initialized up to 10...
+			grphase[qq]+=1; if (grphase[qq]>100000) grphase[qq]=1000;
+		 }
+
+		if ((tm==Tepsioff)) printf("\n-1- eligc2prev[%d]=%6.2f",qq,eligc2[2]);
+//		 show_gc_to_pc_weights(); //weights and their changes
+		 intgr=intgr*0.6+alf+purk; //0.6 -standard; //in established regime 300 = 300*0.6 + 120 <=
+		 if (intgr>Ipred) //generation of impulse in liana cell
+		 {
+			  intgr=0.;
+			  fazacf=-1;
+			  timcs[Ncs]=tm;//Ncs=number of complex spike; timcs=time of CS #Ncs
+			  Ncs++;  //if (Ncs==1000000) return 0;
+			  if (Ncs>3567) Ncs=1;
+		 }
+//unknown_function_1(); //it's function of "q" and we don't use "q" now
+bufferization_of_purk_and_alf();
+protecting_overflow_of_grphase();
+		 if (((!(tm%100000)) || (tm>Tepsioff)&&(!(tm%50000))))
+		 {
+			printf ("tm=%d, tms=%d, Tmsp=%d\n",tm,tms,Tmsp);
+			printf("Number of complex spikes = %d, tm=%d, epsi=%9.7f\n",Ncs,tm,epsi);
+			printf("sum=%6.2f   %6.2f   %6.2f, purk=%6.2f\n",bufs[25]+buff[25],bufs[50]+buff[50],bufs[75]+buff[75],purk); //*2 for cht
+		 }	
+		 tms++; if (tms>Tmsp) tms=1;
+		 if (tm==Tjump1-22000) {s=tms=1; Tmsp=Nnbc=Nnbc_rab;};
+		 if (tm==Tjump1-2000) {fprintf_and_printf(); s=tms=1; Tmsp=Nnbc=Nnbc_rab;};
+		 if (tm==Tjump1) make_jump1();
+		 if ((tm>Tjump1)&&(!tm_ust1)) if (abs((purk+alf)-Ipred*0.4)<0.5) 
+			{tm_ust1=tm-Tjump1; printf("\n\ntm_ust1=%d\nallowexit1=%d",tm_ust1,allowexit1);Sleep(1000);};
+		 if (tm==Tjump1+18000) fprintf_and_printf();
+		 if (tm==Tjump2-22000) {s=tms=1; Tmsp=Nnbc=Nnbc_rab;};
+		 if (tm==Tjump2-2000) {fprintf_and_printf(); s=tms=1; Tmsp=Nnbc=Nnbc_rab;};
+		 if (tm==Tjump2) make_jump2();
+		 if ((tm>Tjump2)&&(!tm_ust2)) if (abs((purk+alf)-Ipred*0.4)<0.5) 
+			{tm_ust2=tm-Tjump2; printf("\n\ntm_ust2=%d\nallowexit1=%d",tm_ust2,allowexit1);Sleep(1000);};
+		 if (tm==Tjump2+18000) fprintf_and_printf();
+		 if (tm==Tepsioff-22000) {s=tms=1; Tmsp=Nnbc=Nnbc_rab;};
+		 if (tm==Tepsioff-2000) {fprintf_and_printf(); s=tms=1; Tmsp=Nnbc=Nnbc_rab;};
+		 if (tm==Tepsioff) make_epsi_little();
+		 if (tm==Tepsioff+18000) fprintf_and_printf();
+		 if (tm==Tpred-1000) fprintf_and_printf();
+		 fazacf++;
+		 if (fazacf>2222) fazacf=100; //protecting unhadled violation when fazacf gets 2000000 //not "fazacf=-1" for hhi[fazacf]=1 under any fazacf>5
+		 phase_control(); //fazat++ and cycling
+	} //tm cycle ends;
+	} //noise cycle ends
+	} //epsi_umka cycle ends
+	if (progmode==1) 
+		{
+			if (epsi_count<5) {epsi_count++; epsi_basal*=3.16227766;} //<10
+			else allowexit2=1;
+		}
+	} //epsi cycle ends (while allowexit)
+	} //eligc cycle ends
+	} //sin_mode cycle ends
+	} //step cycle ends
+	} //M cycle ends
+	} //N cycle ends
+	return(0);
+}  //end of main
