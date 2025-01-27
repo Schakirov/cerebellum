@@ -58,4 +58,5 @@ Before building and running the project, ensure the following prerequisites are 
   The project uses older Visual Studio formats (`.dsp`, `.dsw`, and `.vcproj`). For newer Visual Studio versions, the project may require conversion or compatibility adjustments.
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under a **Customized MIT License** with a requirement for explicit attribution to the original author, Vladimir Shakirov.  
+See the [LICENSE](LICENSE) file for full details.
